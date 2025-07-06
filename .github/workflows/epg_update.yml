@@ -1,0 +1,63 @@
+name: EPG Merge and Pluto ID Update
+
+on:
+  schedule:
+    # Runs at 3:30 AM Eastern Time (convert to UTC: 07:30)
+    - cron: '30 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  epg_update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install lxml pytz requests pyyaml
+
+      - name: Run change_pluto_ids.py
+        env:
+          EPG_SOURCES_PATH: epg_sources.yaml
+          PLUTO_FR_MAPPING_PATH: pluto_fr_mapping.yaml
+        run: python change_pluto_ids.py
+
+      - name: Run xmlmerge.py
+        run: python xmlmerge.py
+
+      - name: Test output files
+        run: |
+          ls -lh cache/*.mod.xml.gz || true
+          ls -lh output/*.xml* || true
+
+      - name: Upload EPG Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: epg-outputs
+          path: |
+            cache/*.mod.xml.gz
+            output/*.xml*
+
+      # Optional: Commit and push changes if you want to store results in the repo
+      # - name: Commit and push changes
+      #   run: |
+      #     git config --global user.name 'github-actions[bot]'
+      #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      #     git add cache/*.mod.xml.gz output/*.xml output/*.xml.gz
+      #     git commit -m 'Automated EPG update and Pluto ID change' || echo "No changes to commit"
+      #     git push

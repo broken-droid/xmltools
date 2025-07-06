@@ -1,0 +1,17 @@
+# List of EPG sources and their suffixes for processing
+sources:
+  - url: 'https://i.mjh.nz/PlutoTV/fr.xml.gz'
+    suffix: '.pluto'
+    output: 'i.mjh.nz_PlutoTV_fr.mod.xml.gz'
+  - url: 'https://i.mjh.nz/Plex/fr.xml.gz'
+    suffix: '.plex'
+    output: 'i.mjh.nz_Plex_fr.mod.xml.gz'
+  - url: 'https://i.mjh.nz/SamsungTVPlus/fr.xml.gz'
+    suffix: '.samsung'
+    output: 'i.mjh.nz_SamsungTVPlus_fr.mod.xml.gz'
+  - url: 'https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN_FR1.xml.gz'
+    suffix: '.rakuten'
+    output: 'epgshare01_online_epg_ripper_RAKUTEN_FR1.mod.xml.gz'
+  - url: 'https://epgshare01.online/epgshare01/epg_ripper_CA1.xml.gz'
+    suffix: '.ca'
+    output: 'epgshare01_online_epg_ripper_CA1.mod.xml.gz'
