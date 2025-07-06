@@ -3,7 +3,7 @@
 # xmltools
 
 ## xmlmerge
-Merge multiple xmltv files.  Opens and writes uncompressed or gzipped xml.  Remote files are saved locally, and new versions will only be pulled after a specified number of hours.  Uses xmlmerge.yaml as input.
+Merge multiple xmltv/EPG files.  Opens and writes uncompressed or gzipped xml.  Remote files are saved locally, and new versions will only be pulled after a specified number of hours.  Uses xmlmerge.yaml as input.
 
 ## timeshift
 Pull channels and programs out of an existing xml file, change the air time for the programs, and write them to the output file.  Uses timeshift.yaml for input.
